@@ -77,25 +77,51 @@
       <div class="view view-main navbar-fixed">
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Listas</span></a>
-            </div>
-            <div class="center sliding">Supermercado</div>
+            <div class="left"></div>
+            <div class="center">Mis listas</div>
             <div class="right">
-              <a href="#" class="link icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
+              <a href="#" class="icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
             </div>
           </div>
         </div>
 
         <div class="pages">
-          <div data-page="index" class="page">
+          <div class="page" data-page="lists">            
             <div class="page-content">
               <div class="content-block">
-                <a href="#" class="button open-popup">Añadir producto</a>
+                <a href="#" class="button add-list">Crear nueva lista</a>
               </div>
 
-              <div class="list-block todo-items-list">
-                <ul></ul>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <a href="p-list.html" class="item-link">
+                      <span class="item-content">
+                        <span class="item-inner">
+                          <span class="item-title">Supermercado</span>
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="p-list.html" class="item-link">
+                      <span class="item-content">
+                        <span class="item-inner">
+                          <span class="item-title">Frutería</span>
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="p-list.html" class="item-link">
+                      <span class="item-content">
+                        <span class="item-inner">
+                          <span class="item-title">BBQ del Sábado</span>
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -108,9 +134,13 @@
       <div class="view view-popup navbar-fixed">
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="left"></div>
+            <div class="left">
+              <a href="#" class="link close-popup icon-only">Cancel</a>              
+            </div>
             <div class="center sliding">Nuevo producto</div>
-            <div class="right"><a href="#" class="link close-popup">Cancel</a></div>
+            <div class="right">
+              <a href="#" class="link add-product">Aceptar<i class="icon icon-ok-blue"></i></a>
+            </div>
           </div>
         </div>
         
@@ -129,7 +159,7 @@
                       </div>
                     </div>
                   </li>
-                  <li>
+                  <!-- <li>
                     <div class="item-content">
                       <div class="item-inner">
                         <div class="item-title label">Color</div>
@@ -145,10 +175,13 @@
                         </div>
                       </div>
                     </div>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
-              <div class="content-block"><a class="button add-task">Añadir producto</a></div>
+
+              <div class="content-block">
+                <a class="button edit-product">Editar producto</a>
+              </div>
             </div>
           </div>
         </div>

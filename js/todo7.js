@@ -35,15 +35,13 @@ $$('.popup .color').on('click', function () {
 
 
 // Add Task
-$$('.popup .add-task').on('click', function () {
+$$('.popup .add-product').on('click', function () {
     var title = $$('.popup input[name="title"]').val().trim();
-    if (title.length === 0) {
-        return;
-    }
-    var color = $$('.popup .color.selected').attr('data-color');
+    if (title.length === 0) { return; }
+    // var color = $$('.popup .color.selected').attr('data-color');
     todoData.push({
         title: title,
-        color: color,
+        // color: color,
         checked: '',
         id: (new Date()).getTime()
     });
@@ -60,7 +58,7 @@ function buildTodoListHtml() {
         var todoItem = todoData[i];
         html += todoItemTemplate
                     .replace(/{{title}}/g, todoItem.title)
-                    .replace(/{{color}}/g, todoItem.color)
+                    // .replace(/{{color}}/g, todoItem.color)
                     .replace(/{{checked}}/g, todoItem.checked)
                     .replace(/{{id}}/g, todoItem.id);
     }
