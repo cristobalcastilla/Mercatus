@@ -12,6 +12,10 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
+var popupView = myApp.addView('.view-popup', {
+    dynamicNavbar: true
+});
+
 var todoData = localStorage.td7Data? JSON.parse(localStorage.td7Data) : [];
 
 $$('.popup').on('open', function () {
@@ -36,8 +40,14 @@ $$('.popup .color').on('click', function () {
 
 // Add Task
 $$('.popup .add-product').on('click', function () {
+    console.log('add add-product');
+
     var title = $$('.popup input[name="title"]').val().trim();
-    if (title.length === 0) { return; }
+    if (title.length === 0) { 
+        console.log('title empty');
+        myApp.closeModal('.popup');
+        return; 
+    }
     // var color = $$('.popup .color.selected').attr('data-color');
     todoData.push({
         title: title,
