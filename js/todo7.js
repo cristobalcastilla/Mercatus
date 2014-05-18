@@ -91,12 +91,17 @@ function startApp () {
 
   // ---
   // VIEW EVENTS
-  $$('.popup').on('open', function () {
-    $$('body').addClass('with-popup');
+  $$('.popup').on('open', function () {    
+    $$('body').addClass('with-popup');    
   });
 
   $$('.popup').on('opened', function () {
     $$(this).find('input[name="title"]').focus();
+  });
+
+  $$('.popup').on('close', function () {
+    $$('body').removeClass('with-popup');
+    $$(this).find('input[name="title"]').blur().val('');
   });
 
   // ---
@@ -111,21 +116,49 @@ function startApp () {
         break;
       case 'list':
         renderList(e);
+        break;
+      case 'find-product':
+        renderFindProduct(e);
+        break;
+      case 'product-detail':
+        renderProductDetail(e);
+        break;
       default:
-        console.log('page not found');
+        console.log('page not found in pageBeforeInit');
     }
   });
 
   $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
-    // console.log('pageInit', page.name);
   });
 
   $$(document).on('pageBeforeRemove', function (e) {
+    var page = e.detail.page;
+
+    switch(page.name) {
+      case 'product-detail':
+        removeProductDetail(e);
+        break;
+      default:
+        console.log('page not found in pageBeforeRemove');
+    }
   });
 
   // ---
   // BUTTON EVENTS
+  $$('.popup .add-product').on('click', function (e) {
+    console.log('popup add product');
+    var name = $$('.popup input[name="title"]').val().trim();
+
+    var products = listActive.get('products');
+    products.add(new Backbone.Model({
+      name: name,
+      checked: ''
+    }));
+
+    app.closeModal();
+    updateList();
+  });
 
   // ---
   // APP & VIEWS
@@ -151,12 +184,15 @@ function renderLists (e) {
   });
 }
 
+
 function renderList (e) {
   var page = e.detail.page;
 
   var model = _.find(listsCollection.models,  function (list) {
     return list.get('slug') === page.query.id;
   });
+
+  listActive = model;
 
   // añado items según la colección de lista
   _.each(model.get('products').models, function (product) {
@@ -165,12 +201,40 @@ function renderList (e) {
   });
 }
 
+
+function updateList () {
+  if (!listActive) throw new Error('listActive undefined');
+
+  var product = _.last(listActive.get('products').models);
+  var template = _.template($$('#template-product-item').html(), product.toJSON());
+  console.log('el list');
+  console.log($$('[data-page="list"] ul'));
+  $$('[data-page="list"] ul.list').append(template);
+}
+
+
+function renderFindProduct (e) {
+}
+
+
+function renderProductDetail (e) {
+  var page = e.detail.page;
+  
+  // Add product
+  $$('.popup .add-product-details').on('click', function () {
+    console.log('popup add product details');
+  });
+}
+
+
+function removeProductDetail (e) {
+  var page = e.detail.page;
+  $$('.popup .add-product-details').off('click');
+}
+
 // var todoData = localStorage.td7Data? JSON.parse(localStorage.td7Data) : [];
 
-// $$('.popup').on('close', function () {
-//   $$('body').removeClass('with-popup');
-//   $$(this).find('input[name="title"]').blur().val('');
-// });
+
 
 // // Popup colors
 // $$('.popup .color').on('click', function () {

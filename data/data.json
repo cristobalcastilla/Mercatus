@@ -38,7 +38,7 @@
       "modified": "",
       "products": [
         { "name": "pork", "amount": 400, "units": "g", "checked": "" },
-        { "name": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "" },
+        { "name": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "checked" },
         { "name": "green peppers", "amount": 250, "units": "u", "checked": "" },
         { "name": "chocolate", "amount": 2, "units": "p", "checked": "checked" }
       ],
@@ -48,8 +48,8 @@
 
 
   "products": [
-    { "name": "apples" },
-    { "name": "bananas" },
+    { "name": "apples", "category": 1 },
+    { "name": "bananas", "category": 1 },
     { "name": "chocolate" },
     { "name": "choplets" },
     { "name": "eggplants" },
