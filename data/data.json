@@ -1,10 +1,10 @@
 {
 
   "users": [
-    { "id": 1, "firstName": "Cristobal", "lastName": "Castilla", "email": "cristobal@aerstudio.com" },
-    { "id": 2, "firstName": "Catalina", "lastName": "Perez", "email": "catalina@gmail.com" },
-    { "id": 3, "firstName": "Carlos", "lastName": "Torres", "email": "carlos@yahoo.es" },
-    { "id": 4, "firstName": "Marina", "lastName": "Robles", "email": "mrobles@hotmail.com" }
+    { "id": 1, "name": "Cristobal", "lastName": "Castilla", "email": "cristobal@aerstudio.com" },
+    { "id": 2, "name": "Catalina", "lastName": "Perez", "email": "catalina@gmail.com" },
+    { "id": 3, "name": "Carlos", "lastName": "Torres", "email": "carlos@yahoo.es" },
+    { "id": 4, "name": "Marina", "lastName": "Robles", "email": "mrobles@hotmail.com" }
   ],
 
 
@@ -14,9 +14,9 @@
       "created": "2014-01-21T00:00",
       "modified": "",
       "products": [
-        { "name": "flour", "amount": 0.5, "units": "g" },
-        { "name": "wc paper" }, 
-        { "name": "napkins", "amount": 1, "units": "p" }
+        { "name": "flour", "amount": 0.5, "units": "g", "checked": "checked" },
+        { "name": "wc paper", "checked": "" }, 
+        { "name": "napkins", "amount": 1, "units": "p", "checked": "" }
       ],
       "users": [1, 2]
     },
@@ -25,10 +25,10 @@
       "created": "2014-02-14T00:00",
       "modified": "",
       "products": [
-        { "name": "apples", "amount": 1, "units": "k" },
-        { "name": "pineapple", "amount": 700, "units": "g" },
-        { "name": "lettuce" },
-        { "name": "oranges", "amount": 3 }
+        { "name": "apples", "amount": 1, "units": "k", "checked": "" },
+        { "name": "pineapple", "amount": 700, "units": "g", "checked": "" },
+        { "name": "lettuce", "checked": "" },
+        { "name": "oranges", "amount": 3, "checked": "checked" }
       ],
       "users": [1, 2]
     },
@@ -37,10 +37,10 @@
       "created": "2014-05-02T00:00",
       "modified": "",
       "products": [
-        { "name": "pork", "amount": 400, "units": "g" },
-        { "name": "milk", "amount": 2, "units": "l" },
-        { "name": "green peppers", "amount": 250, "units": "u" },
-        { "name": "chocolate", "amount": 2, "units": "p" }
+        { "name": "pork", "amount": 400, "units": "g", "checked": "" },
+        { "name": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "" },
+        { "name": "green peppers", "amount": 250, "units": "u", "checked": "" },
+        { "name": "chocolate", "amount": 2, "units": "p", "checked": "checked" }
       ],
       "users": [1, 2, 3, 4]
     }

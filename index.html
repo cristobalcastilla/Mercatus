@@ -41,7 +41,7 @@
       <div class="list-block">
         <ul>
           <li>
-            <a href="about.html" class="item-link">
+            <a href="about.html" class="link">
               <div class="item-content">
                 <div class="item-inner">
                   <div class="item-title">Listas</div>
@@ -50,7 +50,7 @@
             </a>
           </li>
           <li>
-            <a href="services.html" class="item-link">
+            <a href="services.html" class="link">
               <div class="item-content">
                 <div class="item-inner">
                   <div class="item-title">Aquí y ahora</div>
@@ -59,7 +59,7 @@
             </a>
           </li>
           <li>
-            <a href="form.html" class="item-link">
+            <a href="form.html" class="link">
               <div class="item-content">
                 <div class="item-inner">
                   <div class="item-title">Usuario</div>
@@ -74,7 +74,7 @@
     <!-- Views-->
     <div class="views">
       <!-- view -->
-      <div class="view view-main navbar-fixed">
+      <div class="view view-main navbar-fixed" data-url="v-lists.html">
         <div class="navbar">
           <div class="navbar-inner">
             <div class="left"></div>
@@ -93,34 +93,7 @@
               </div>
 
               <div class="list-block">
-                <ul>
-                  <li>
-                    <a href="p-list.html" class="item-link">
-                      <span class="item-content">
-                        <span class="item-inner">
-                          <span class="item-title">Supermercado</span>
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="p-list.html" class="item-link">
-                      <span class="item-content">
-                        <span class="item-inner">
-                          <span class="item-title">Frutería</span>
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="p-list.html" class="item-link">
-                      <span class="item-content">
-                        <span class="item-inner">
-                          <span class="item-title">BBQ del Sábado</span>
-                        </span>
-                      </span>
-                    </a>
-                  </li>
+                <ul>               
                 </ul>
               </div>
             </div>
@@ -145,7 +118,7 @@
         </div>
         
         <div class="pages">
-          <div class="page" data-page="index">
+          <div class="page" data-page="find-product">
             <div class="page-content">
               <div class="list-block">
                 <ul>
@@ -189,7 +162,39 @@
     </div>
     <!-- end popup -->
 
-    <!-- Template -->
+    <!-- Templates -->    
+    <!-- LISTS > LIST ITEM TEMPLATE -->
+    <script id="template-list-item" type="template">
+      <li>
+        <a href="p-list.html?id={{slug}}" class="item-link">
+          <span class="item-content">
+            <span class="item-inner">
+              <span class="item-title">{{name}}</span>
+            </span>
+          </span>
+        </a>
+      </li>
+    </script>
+  
+    <!-- LIST > PRODUCT ITEM -->
+    <script id="template-product-item" type="template">
+      <li class="swipeout">
+        <label class="label-checkbox item-content swipeout-content">
+          <input type="checkbox" {{checked}}>
+        
+          <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+          <div class="item-inner">
+            <div class="item-title">{{name}}</div>
+          </div>
+        </label>
+
+        <div class="swipeout-actions">
+          <div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div>
+        </div>
+      </li>
+    </script>
+  
+    <!-- PRODUCT DETAIL TEMPLATE -->
     <script id="todo-item-template" type="template">
       <li data-color="{{color}}" data-id="{{id}}" class="swipeout">
         <label class="label-checkbox item-content swipeout-content"><input type="checkbox" {{checked}}>
@@ -203,7 +208,11 @@
         </div>
       </li>
     </script>
-
+    
+    <script type="text/javascript" src="vendor/js/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/js/underscore-min.js"></script>
+    <script type="text/javascript" src="vendor/js/backbone-min.js"></script>
+    
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="vendor/js/framework7.min.js"></script>
     <!-- Path to your app js-->

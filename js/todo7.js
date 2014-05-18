@@ -1,118 +1,256 @@
-// Initialize your app
-var myApp = new Framework7({
-    modalTitle: 'Mercatus'
-});
 
-// Export selectors engine
-var $$ = Framework7.$;
+$(document).ready(function($) {
+  console.log('jQuery is ready');
 
-// Add views
-var mainView = myApp.addView('.view-main', {
-    // Because we use fixed-through navbar we can enable dynamic navbar
-    dynamicNavbar: true
-});
+  // para usar los templates tipo Mustache.js
+  _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
-var popupView = myApp.addView('.view-popup', {
-    dynamicNavbar: true
-});
-
-var todoData = localStorage.td7Data? JSON.parse(localStorage.td7Data) : [];
-
-$$('.popup').on('open', function () {
-    $$('body').addClass('with-popup');
-});
-
-$$('.popup').on('opened', function () {
-    $$(this).find('input[name="title"]').focus();
-});
-
-$$('.popup').on('close', function () {
-    $$('body').removeClass('with-popup');
-    $$(this).find('input[name="title"]').blur().val('');
-});
-
-// Popup colors
-$$('.popup .color').on('click', function () {
-    $$('.popup .color.selected').removeClass('selected');
-    $$(this).addClass('selected');
+  // check for data
+  if (!localStorage.mercatus) {
+    loadInitialData();
+  } else {
+    data = localStorage.mercatus.data;
+  }
 });
 
 
-// Add Task
-$$('.popup .add-product').on('click', function () {
-    console.log('add add-product');
-
-    var title = $$('.popup input[name="title"]').val().trim();
-    if (title.length === 0) { 
-        console.log('title empty');
-        myApp.closeModal('.popup');
-        return; 
-    }
-    // var color = $$('.popup .color.selected').attr('data-color');
-    todoData.push({
-        title: title,
-        // color: color,
-        checked: '',
-        id: (new Date()).getTime()
-    });
-    localStorage.td7Data = JSON.stringify(todoData);
-    buildTodoListHtml();
-    myApp.closeModal('.popup');
-});
-
-// Build Todo HTML
-var todoItemTemplate = $$('#todo-item-template').html();
-function buildTodoListHtml() {
-    var html = '';
-    for (var i = 0; i < todoData.length; i++) {
-        var todoItem = todoData[i];
-        html += todoItemTemplate
-                    .replace(/{{title}}/g, todoItem.title)
-                    // .replace(/{{color}}/g, todoItem.color)
-                    .replace(/{{checked}}/g, todoItem.checked)
-                    .replace(/{{id}}/g, todoItem.id);
-    }
-    $$('.todo-items-list ul').html(html);
+function loadInitialData () {
+  $.ajax({
+    url: 'data/data.json',
+    dataType: 'json',
+    success: onLoadInitialDataSuccess,
+    error: onLoadInitialDataError
+  });
 }
-// Build HTML on App load
-buildTodoListHtml();
 
-// Mark checked
-$$('.todo-items-list').on('change', 'input', function () {
-    var input = $$(this);
-    var checked = input[0].checked;
-    var id = input.parents('li').attr('data-id') * 1;
-    for (var i = 0; i < todoData.length; i++) {
-        if (todoData[i].id === id) todoData[i].checked = checked ? 'checked' : '';
-    }
-    localStorage.td7Data = JSON.stringify(todoData);
-});
+function onLoadInitialDataSuccess (data) {
+  console.log('SUCCESS loading data');
 
-// Delete item
-$$('.todo-items-list').on('delete', '.swipeout', function () {
-    var id = $$(this).attr('data-id') * 1;
-    var index;
-    for (var i = 0; i < todoData.length; i++) {
-        if (todoData[i].id === id) index = i;
-    }
-    if (typeof(index) !== 'undefined') {
-        todoData.splice(index, 1);
-        localStorage.td7Data = JSON.stringify(todoData);
-    }
-});
+  // PRODUCTS (RAW) COLLECTION
+  // creamos una colección para guardar los productos
+  productsCollection = new Backbone.Collection();
 
-// Update app when manifest updated 
-// http://www.html5rocks.com/en/tutorials/appcache/beginner/
-// Check if a new cache is available on page load.
-// window.addEventListener('load', function (e) {
-//     window.applicationCache.addEventListener('updateready', function (e) {
-//         if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-//             // Browser downloaded a new app cache.
-//             myApp.confirm('A new version of ToDo7 is available. Do you want to load it right now?', function () {
-//                 window.location.reload();
-//             });
-//         } else {
-//             // Manifest didn't changed. Nothing new to server.
-//         }
-//     }, false);
-// }, false);
+  _.each(data.products, function (product) {
+    var productModel = new Backbone.Model({ 
+      id: product.name,
+      name: product.name 
+    });
+    productsCollection.add(productModel);
+  });
+
+  // USERS COLLECTION
+  // creamos una colección para guardar los datos de los usuarios
+  usersCollection = new Backbone.Collection();
+
+  _.each(data.users, function (user) {
+    var userModel = new Backbone.Model(user, { parse: true });
+    usersCollection.add(userModel);
+  });
+
+  // LISTS COLLECTION
+  // inicializamos la colección que tendrá todas las listas
+  listsCollection = new Backbone.Collection();
+  
+  _.each(data.lists, function (list) {
+    // creamos el modelo que contendrá los datos de 1 lista
+    var listModel = new Backbone.Model(list, { parse: true });
+    listModel.set('slug', listModel.get('name').toSlug());
+  
+    var listProducts = new Backbone.Collection();
+    _.each(list.products, function (product) {
+      var productModel = new Backbone.Model(product, { parse: true });
+      listProducts.add(productModel);
+    });
+    listModel.set('products', listProducts);
+
+    // relleno los usuarios a la lista
+    var listUsers = new Backbone.Collection();
+    _.each(list.users, function (user) {
+      listUsers.add(usersCollection.get(user));
+    });
+    listModel.set('users', listUsers);
+
+    // añado la nueva lista a la colección
+    listsCollection.add(listModel);
+  });
+
+  // inicio la aplicación!!!
+  startApp();
+}
+
+function onLoadInitialDataError (xhr, textStatus, errorThrown) {
+  console.log('ERROR loading data');
+}
+
+
+// ---
+// FRAMEWORK 7
+
+function startApp () {
+  $$ = Framework7.$; // Export selectors engine
+
+  // ---
+  // VIEW EVENTS
+  $$('.popup').on('open', function () {
+    $$('body').addClass('with-popup');
+  });
+
+  $$('.popup').on('opened', function () {
+    $$(this).find('input[name="title"]').focus();
+  });
+
+  // ---
+  // PAGE EVENTS
+  $$(document).on('pageBeforeInit', function (e) {
+    var page = e.detail.page;
+    console.log('pageBeforeInit', page.name, page.query);
+
+    switch(page.name) {
+      case 'lists':
+        renderLists(e);
+        break;
+      case 'list':
+        renderList(e);
+      default:
+        console.log('page not found');
+    }
+  });
+
+  $$(document).on('pageInit', function (e) {
+    var page = e.detail.page;
+    // console.log('pageInit', page.name);
+  });
+
+  $$(document).on('pageBeforeRemove', function (e) {
+  });
+
+  // ---
+  // BUTTON EVENTS
+
+  // ---
+  // APP & VIEWS
+  // inicializamos la libreria que gestiona la arquitectura de la app
+  app = new Framework7({
+    modalTitle: 'Mercatus'
+  });
+
+  // Inicializo las vistas
+  mainView = app.addView('.view-main', { dynamicNavbar: true });
+  popupView = app.addView('.view-popup', { dynamicNavbar: true });
+}
+
+// ---
+// PAGES
+function renderLists (e) {
+  var page = e.detail.page;
+
+  // añado items según la colección de listas
+  _.each(listsCollection.models, function (list) { 
+    var template = _.template($$('#template-list-item').html(), list.toJSON());
+    $$(page.container).find('ul').append(template);
+  });
+}
+
+function renderList (e) {
+  var page = e.detail.page;
+
+  var model = _.find(listsCollection.models,  function (list) {
+    return list.get('slug') === page.query.id;
+  });
+
+  // añado items según la colección de lista
+  _.each(model.get('products').models, function (product) {
+    var template = _.template($$('#template-product-item').html(), product.toJSON());
+    $$(page.container).find('ul').append(template);
+  });
+}
+
+// var todoData = localStorage.td7Data? JSON.parse(localStorage.td7Data) : [];
+
+// $$('.popup').on('close', function () {
+//   $$('body').removeClass('with-popup');
+//   $$(this).find('input[name="title"]').blur().val('');
+// });
+
+// // Popup colors
+// $$('.popup .color').on('click', function () {
+//   $$('.popup .color.selected').removeClass('selected');
+//   $$(this).addClass('selected');
+// });
+
+// // Add Task
+// $$('.popup .add-product').on('click', function () {
+//   console.log('add add-product');
+
+//   var title = $$('.popup input[name="title"]').val().trim();
+//   if (title.length === 0) { 
+//     console.log('title empty');
+//     myApp.closeModal('.popup');
+//     return; 
+//   }
+//     // var color = $$('.popup .color.selected').attr('data-color');
+//     todoData.push({
+//       title: title,
+//         // color: color,
+//         checked: '',
+//         id: (new Date()).getTime()
+//       });
+//     localStorage.td7Data = JSON.stringify(todoData);
+//     buildTodoListHtml();
+//     myApp.closeModal('.popup');
+//   });
+
+// // Build Todo HTML
+// var todoItemTemplate = $$('#todo-item-template').html();
+// function buildTodoListHtml() {
+//   var html = '';
+//   for (var i = 0; i < todoData.length; i++) {
+//     var todoItem = todoData[i];
+//     html += todoItemTemplate
+//     .replace(/{{title}}/g, todoItem.title)
+//                     // .replace(/{{color}}/g, todoItem.color)
+//                     .replace(/{{checked}}/g, todoItem.checked)
+//                     .replace(/{{id}}/g, todoItem.id);
+//                   }
+//                   $$('.todo-items-list ul').html(html);
+//                 }
+// // Build HTML on App load
+// buildTodoListHtml();
+
+// // Mark checked
+// $$('.todo-items-list').on('change', 'input', function () {
+//   var input = $$(this);
+//   var checked = input[0].checked;
+//   var id = input.parents('li').attr('data-id') * 1;
+//   for (var i = 0; i < todoData.length; i++) {
+//     if (todoData[i].id === id) todoData[i].checked = checked ? 'checked' : '';
+//   }
+//   localStorage.td7Data = JSON.stringify(todoData);
+// });
+
+// // Delete item
+// $$('.todo-items-list').on('delete', '.swipeout', function () {
+//   var id = $$(this).attr('data-id') * 1;
+//   var index;
+//   for (var i = 0; i < todoData.length; i++) {
+//     if (todoData[i].id === id) index = i;
+//   }
+//   if (typeof(index) !== 'undefined') {
+//     todoData.splice(index, 1);
+//     localStorage.td7Data = JSON.stringify(todoData);
+//   }
+// });
+
+String.prototype.toSlug = function(){
+    st = this.toLowerCase();
+    st = st.replace(/[\u00C0-\u00C5]/ig,'a')
+    st = st.replace(/[\u00C8-\u00CB]/ig,'e')
+    st = st.replace(/[\u00CC-\u00CF]/ig,'i')
+    st = st.replace(/[\u00D2-\u00D6]/ig,'o')
+    st = st.replace(/[\u00D9-\u00DC]/ig,'u')
+    st = st.replace(/[\u00D1]/ig,'n')
+    st = st.replace(/[^a-z0-9 ]+/gi,'')
+    st = st.trim().replace(/ /g,'-');
+    st = st.replace(/[\-]{2}/g,'');
+    return (st.replace(/[^a-z\- ]*/gi,''));
+}
