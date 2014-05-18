@@ -1,0 +1,105 @@
+{
+
+  "users": [
+    { "id": 1, "firstName": "Cristobal", "lastName": "Castilla", "email": "cristobal@aerstudio.com" },
+    { "id": 2, "firstName": "Catalina", "lastName": "Perez", "email": "catalina@gmail.com" },
+    { "id": 3, "firstName": "Carlos", "lastName": "Torres", "email": "carlos@yahoo.es" },
+    { "id": 4, "firstName": "Marina", "lastName": "Robles", "email": "mrobles@hotmail.com" }
+  ],
+
+
+  "lists": [
+    {
+      "name": "Supermercado",
+      "created": "2014-01-21T00:00",
+      "modified": "",
+      "products": [
+        { "name": "flour", "amount": 0.5, "units": "g" },
+        { "name": "wc paper" }, 
+        { "name": "napkins", "amount": 1, "units": "p" }
+      ],
+      "users": [1, 2]
+    },
+    {
+      "name": "Frutería",
+      "created": "2014-02-14T00:00",
+      "modified": "",
+      "products": [
+        { "name": "apples", "amount": 1, "units": "k" },
+        { "name": "pineapple", "amount": 700, "units": "g" },
+        { "name": "lettuce" },
+        { "name": "oranges", "amount": 3 }
+      ],
+      "users": [1, 2]
+    },
+    {
+      "name": "BBQ con amigos",
+      "created": "2014-05-02T00:00",
+      "modified": "",
+      "products": [
+        { "name": "pork", "amount": 400, "units": "g" },
+        { "name": "milk", "amount": 2, "units": "l" },
+        { "name": "green peppers", "amount": 250, "units": "u" },
+        { "name": "chocolate", "amount": 2, "units": "p" }
+      ],
+      "users": [1, 2, 3, 4]
+    }
+  ],
+
+
+  "products": [
+    { "name": "apples" },
+    { "name": "bananas" },
+    { "name": "chocolate" },
+    { "name": "choplets" },
+    { "name": "eggplants" },
+    { "name": "flour" },
+    { "name": "green peppers" },
+    { "name": "ketchup" },
+    { "name": "lettuce" },
+    { "name": "napkins" },
+    { "name": "milk" },
+    { "name": "mustard" },
+    { "name": "pears" },
+    { "name": "oranges" },
+    { "name": "red peppers" },
+    { "name": "pineapple" },
+    { "name": "pickles" },
+    { "name": "pork" },
+    { "name": "potatos" },
+    { "name": "shampoo" },
+    { "name": "shrimps" },
+    { "name": "sirloin" },
+    { "name": "tomatos" },
+    { "name": "veal" },
+    { "name": "wc paper" }
+  ],
+
+  "categories": [
+    { "id":1, "name": "fruit and veg" },
+    { "id":2, "name": "meat and seafood" },
+    { "id":3, "name": "milk and dairy" },
+    { "id":4, "name": "breads and baked goods" },
+    { "id":5, "name": "packaged goods, pasta and sauces" },
+    { "id":6, "name": "tinned goods and baking" },
+    { "id":7, "name": "dried herbs and spices" },
+    { "id":8, "name": "oils and dressings" },
+    { "id":9, "name": "world cuisine" },
+    { "id":10, "name": "world frozen" },
+    { "id":11, "name": "drinks and alcohol" },
+    { "id":12, "name": "snacks" },
+    { "id":13, "name": "beauty and health" },
+    { "id":14, "name": "baby" },
+    { "id":15, "name": "household" },
+    { "id":16, "name": "other" }
+  ],
+
+  "units": [
+    { "name": "grams", "abbr": "grs", "id": "g" },
+    { "name": "kilograms", "abbr": "Kg", "id": "k" },
+    { "name": "liters", "abbr": "L", "id": "l" },
+    { "name": "mililiters", "abbr": "ml", "id": "m" },
+    { "name": "package", "abbr": "pack", "id": "p" },
+    { "name": "pieces", "abbr": "units", "id": "u" }
+  ]
+}
