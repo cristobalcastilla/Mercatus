@@ -29,17 +29,60 @@
   </head>
 
   <body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+
+    <!-- Main menu -->
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <p>Left panel content goes here</p>
+      </div>
+
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="about.html" class="item-link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Listas</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="services.html" class="item-link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Aquí y ahora</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="form.html" class="item-link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Usuario</div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <!-- Views-->
     <div class="views">
-
       <!-- view -->
       <div class="view view-main navbar-fixed">
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="left"></div>
-            <div class="center sliding">Listas</div>
+            <div class="left">
+              <a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Listas</span></a>
+            </div>
+            <div class="center sliding">Supermercado</div>
             <div class="right">
-              <a href="#" class="link icon-only open-popup"><i class="icon icon-plus">+</i></a>
+              <a href="#" class="link icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
             </div>
           </div>
         </div>
@@ -47,6 +90,10 @@
         <div class="pages">
           <div data-page="index" class="page">
             <div class="page-content">
+              <div class="content-block">
+                <a href="#" class="button open-popup">Añadir producto</a>
+              </div>
+
               <div class="list-block todo-items-list">
                 <ul></ul>
               </div>
@@ -56,7 +103,7 @@
       </div>
     </div> <!-- end views -->
     
-    <!-- Popup to add new task -->
+    <!-- Popup to add new task -->    
     <div class="popup">
       <div class="view view-popup navbar-fixed">
         <div class="navbar">
@@ -106,9 +153,10 @@
           </div>
         </div>
       </div>
-    </div> <!-- end popup -->
+    </div>
+    <!-- end popup -->
 
-    <!-- Template-->
+    <!-- Template -->
     <script id="todo-item-template" type="template">
       <li data-color="{{color}}" data-id="{{id}}" class="swipeout">
         <label class="label-checkbox item-content swipeout-content"><input type="checkbox" {{checked}}>
