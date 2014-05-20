@@ -1,91 +1,3 @@
-
-$(document).ready(function($) {
-  console.log('jQuery is ready');
-
-  // para usar los templates tipo Mustache.js
-  _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
-
-  // check for data
-  if (!localStorage.mercatus) {
-    loadInitialData();
-  } else {
-    data = localStorage.mercatus.data;
-  }
-});
-
-
-function loadInitialData () {
-  $.ajax({
-    url: 'data/data.json',
-    dataType: 'json',
-    success: onLoadInitialDataSuccess,
-    error: onLoadInitialDataError
-  });
-}
-
-function onLoadInitialDataSuccess (data) {
-  console.log('SUCCESS loading data');
-
-  // PRODUCTS (RAW) COLLECTION
-  // creamos una colección para guardar los productos
-  productsCollection = new Backbone.Collection();
-
-  _.each(data.products, function (product) {
-    var productModel = new Backbone.Model({ 
-      id: product.name,
-      name: product.name 
-    });
-    productsCollection.add(productModel);
-  });
-
-  // USERS COLLECTION
-  // creamos una colección para guardar los datos de los usuarios
-  usersCollection = new Backbone.Collection();
-
-  _.each(data.users, function (user) {
-    var userModel = new Backbone.Model(user, { parse: true });
-    usersCollection.add(userModel);
-  });
-
-  // LISTS COLLECTION
-  // inicializamos la colección que tendrá todas las listas
-  listsCollection = new Backbone.Collection();
-  
-  _.each(data.lists, function (list) {
-    // creamos el modelo que contendrá los datos de 1 lista
-    var listModel = new Backbone.Model(list, { parse: true });
-    listModel.set('slug', listModel.get('name').toSlug());
-  
-    var listProducts = new Backbone.Collection();
-    _.each(list.products, function (product) {
-      var productModel = new Backbone.Model(product, { parse: true });
-      listProducts.add(productModel);
-    });
-    listModel.set('products', listProducts);
-
-    // relleno los usuarios a la lista
-    var listUsers = new Backbone.Collection();
-    _.each(list.users, function (user) {
-      listUsers.add(usersCollection.get(user));
-    });
-    listModel.set('users', listUsers);
-
-    // añado la nueva lista a la colección
-    listsCollection.add(listModel);
-  });
-
-  // inicio la aplicación!!!
-  startApp();
-}
-
-function onLoadInitialDataError (xhr, textStatus, errorThrown) {
-  console.log('ERROR loading data');
-}
-
-
-// ---
-// FRAMEWORK 7
-
 function startApp () {
   $$ = Framework7.$; // Export selectors engine
 
@@ -234,8 +146,6 @@ function removeProductDetail (e) {
 
 // var todoData = localStorage.td7Data? JSON.parse(localStorage.td7Data) : [];
 
-
-
 // // Popup colors
 // $$('.popup .color').on('click', function () {
 //   $$('.popup .color.selected').removeClass('selected');
@@ -305,16 +215,4 @@ function removeProductDetail (e) {
 //   }
 // });
 
-String.prototype.toSlug = function(){
-    st = this.toLowerCase();
-    st = st.replace(/[\u00C0-\u00C5]/ig,'a')
-    st = st.replace(/[\u00C8-\u00CB]/ig,'e')
-    st = st.replace(/[\u00CC-\u00CF]/ig,'i')
-    st = st.replace(/[\u00D2-\u00D6]/ig,'o')
-    st = st.replace(/[\u00D9-\u00DC]/ig,'u')
-    st = st.replace(/[\u00D1]/ig,'n')
-    st = st.replace(/[^a-z0-9 ]+/gi,'')
-    st = st.trim().replace(/ /g,'-');
-    st = st.replace(/[\-]{2}/g,'');
-    return (st.replace(/[^a-z\- ]*/gi,''));
-}
+
