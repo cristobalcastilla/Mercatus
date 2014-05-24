@@ -11,6 +11,8 @@ $(document).ready(function($) {
 
   templates = [];
   pages = [];
+
+  categoriesCollection = null;
   productsCollection = null;
   usersCollection = null;
   listsCollection = null;
@@ -76,50 +78,70 @@ function loadInitialData () {
 function createDataCollections (data) {
   console.log('SUCCESS loading data');
 
+
+  // CATEGORIES COLLECTION
+  categoriesCollection = new CategoriesCollection();
+  _.each(data.categories, function (category) {    
+    var categoryModel = new CategoryModel({
+      id: category.id,
+      name: category.name,
+      slug: category.name.toSlug()
+    });
+    categoriesCollection.add(categoryModel);
+  });
+  
+
   // PRODUCTS (RAW) COLLECTION
   // creamos una colección para guardar los productos
-  productsCollection = new Backbone.Collection();
+  productsCollection = new ProductsCollection();
 
   _.each(data.products, function (product) {
-    var productModel = new Backbone.Model({ 
-      id: product.name,
+    var productModel = new ProductModel({
+      id: product.name.toSlug(),
       name: product.name,
-      slug: product.name.toSlug()
+      category: categoriesCollection.get(product.category)
     });
     productsCollection.add(productModel);
   });
 
+
   // USERS COLLECTION
   // creamos una colección para guardar los datos de los usuarios
-  usersCollection = new Backbone.Collection();
+  usersCollection = new UsersCollection();
 
   _.each(data.users, function (user) {
-    var userModel = new Backbone.Model(user, { parse: true });
+    var userModel = new UserModel(user, { parse: true });
     usersCollection.add(userModel);
   });
 
+
   // LISTS COLLECTION
   // inicializamos la colección que tendrá todas las listas
-  listsCollection = new Backbone.Collection();
+  listsCollection = new ListsCollection();
   
   _.each(data.lists, function (list) {
     // creamos el modelo que contendrá los datos de 1 lista
-    var listModel = new Backbone.Model(list, { parse: true });
-    listModel.set('slug', listModel.get('name').toSlug());
-  
-    var listProducts = new Backbone.Collection();
-    _.each(list.products, function (product) {
-      var productModel = new Backbone.Model(product, { parse: true });
-      listProducts.add(productModel);
+    var listModel = new ListModel({
+      name: list.name,
+      created: moment(list.created),
+      slug: list.name.toSlug()
     });
-    listModel.set('products', listProducts);
+    
+    // añadimos los items a la lista
+    _.each(list.items, function (item) {
+      var listItemModel = new ListItemModel({
+        product: productsCollection.get(item.slug),
+        checked: item.checked,
+        amount: item.amount,
+        units: item.units
+      });
+      listModel.get('items').add(listItemModel);
+    });
 
     // relleno los usuarios a la lista
-    var listUsers = new Backbone.Collection();
     _.each(list.users, function (user) {
-      listUsers.add(usersCollection.get(user));
+      listModel.get('users').add(usersCollection.get(user));
     });
-    listModel.set('users', listUsers);
 
     // añado la nueva lista a la colección
     listsCollection.add(listModel);

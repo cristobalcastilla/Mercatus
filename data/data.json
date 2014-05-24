@@ -13,7 +13,7 @@
       "name": "Supermercado",
       "created": "2014-01-21T00:00",
       "modified": "",
-      "products": [
+      "items": [
         { "slug": "flour", "amount": 0.5, "units": "g", "checked": "checked" },
         { "slug": "wc-paper", "checked": "" }, 
         { "slug": "napkins", "amount": 1, "units": "p", "checked": "" }
@@ -24,7 +24,7 @@
       "name": "Frutería",
       "created": "2014-02-14T00:00",
       "modified": "",
-      "products": [
+      "items": [
         { "slug": "apples", "amount": 1, "units": "k", "checked": "" },
         { "slug": "pineapple", "amount": 700, "units": "g", "checked": "" },
         { "slug": "lettuce", "checked": "" },
@@ -36,7 +36,7 @@
       "name": "BBQ con amigos",
       "created": "2014-05-02T00:00",
       "modified": "",
-      "products": [
+      "items": [
         { "slug": "pork", "amount": 400, "units": "g", "checked": "" },
         { "slug": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "checked" },
         { "slug": "green peppers", "amount": 250, "units": "u", "checked": "" },
