@@ -1,3 +1,5 @@
+
+
 String.prototype.toSlug = function(){
   st = this.toLowerCase();
   st = st.replace(/[\u00C0-\u00C5]/ig,'a')

@@ -3,35 +3,66 @@ $(document).ready(function($) {
   console.log('jQuery is ready');
 
   // SETUP  
+  $$ = Framework7.$; // Export selectors engine
   _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g }; // para usar los templates tipo Mustache.js
 
+  loadCounter = 0;
+  loadingOrder = [loadTemplates, loadPages, loadInitialData, startApp];
+
   templates = [];
+  pages = [];
   productsCollection = null;
   usersCollection = null;
   listsCollection = null;
-  data = {};
 
-  loadTemplates();
+  $(document).on('step-loaded', loadNext);
+  loadNext();
 });
 
-function loadTemplates (response) {
+function loadNext () {  
+  var ret = loadingOrder[loadCounter].toString();
+  ret = ret.substr('function '.length);
+  ret = ret.substr(0, ret.indexOf('('));
+  
+  console.log('load next', ret);
+  loadingOrder[loadCounter]();
+  loadCounter++;
+}
+
+
+function loadTemplates () {
   if (templates.length === 0) templates = $('script[type="template"]');
 
   for (var i=0, l=templates.length; i<l; i++) {
     var $item = $(templates[i]);
 
-    if ($item.context.innerHTML === '') {
-      var id = $item.attr('id');
-      var src = id.substring(9);
-      $('#'+id).load('templates/'+src+'.html', loadTemplates);
+    if ($item.context.innerHTML === '') {      
+      var fileName = $item.attr('id').substring(9);        
+      $item.load('templates/'+fileName+'.html', loadTemplates);
       return;
     }
   }
   
-  loadInitialData();
+  $(document).trigger('step-loaded');
 }
 
-function loadInitialData (response) {
+function loadPages () {
+  if (pages.length === 0) pages = $('[data-start-page]');
+
+  for (var i=0, l=pages.length; i<l; i++) {
+    var $item = $(pages[i]);
+
+    if ($item.context.innerHTML === '') {
+      var fileName = $item.attr('data-start-page');      
+      $item.load('p-'+fileName+'.html', loadPages);
+      return;
+    }
+  }
+
+  $(document).trigger('step-loaded');
+}
+
+function loadInitialData () {
   if (!usersCollection || !productsCollection || !listsCollection) {
     $.ajax({
       url: 'data/data.json',
@@ -52,7 +83,8 @@ function createDataCollections (data) {
   _.each(data.products, function (product) {
     var productModel = new Backbone.Model({ 
       id: product.name,
-      name: product.name 
+      name: product.name,
+      slug: product.name.toSlug()
     });
     productsCollection.add(productModel);
   });
@@ -94,5 +126,5 @@ function createDataCollections (data) {
   });
 
   // inicio la aplicación!!!
-  startApp();
+  $(document).trigger('step-loaded');
 }

@@ -8,24 +8,17 @@
     <title>Mercatus</title>
 
     <link rel="stylesheet" href="vendor/css/framework7.min.css">
-    <!-- <link rel="stylesheet" href="css/app.css"> -->
+    <link rel="stylesheet" href="css/app.css">
     
     <!-- Favicon-->
     <link href="img/icon-57.png" rel="shortcut icon"> 
-    <!-- iOS 7 iPad (retina) -->
-    <link href="img/icon-152.png" sizes="152x152" rel="apple-touch-icon">
-    <!-- iOS 6 iPad (retina) -->
-    <link href="img/icon-144.png" sizes="144x144" rel="apple-touch-icon">
-    <!-- iOS 7 iPhone (retina) -->
-    <link href="img/icon-120.png" sizes="120x120" rel="apple-touch-icon">
-    <!-- iOS 6 iPhone (retina) -->
-    <link href="img/icon-114.png" sizes="114x114" rel="apple-touch-icon">
-    <!-- iOS 7 iPad -->
-    <link href="img/icon-76.png" sizes="76x76" rel="apple-touch-icon">
-    <!-- iOS 6 iPad -->
-    <link href="img/icon-72.png" sizes="72x72" rel="apple-touch-icon">
-    <!-- iOS 6 iPhone -->
-    <link href="img/icon-57.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="img/icon-152.png" sizes="152x152" rel="apple-touch-icon"> <!-- iOS 7 iPad (retina) -->
+    <link href="img/icon-144.png" sizes="144x144" rel="apple-touch-icon"> <!-- iOS 6 iPad (retina) -->
+    <link href="img/icon-120.png" sizes="120x120" rel="apple-touch-icon"> <!-- iOS 7 iPhone (retina) -->
+    <link href="img/icon-114.png" sizes="114x114" rel="apple-touch-icon"> <!-- iOS 6 iPhone (retina) -->
+    <link href="img/icon-76.png" sizes="76x76" rel="apple-touch-icon"> <!-- iOS 7 iPad -->
+    <link href="img/icon-72.png" sizes="72x72" rel="apple-touch-icon"> <!-- iOS 6 iPad -->
+    <link href="img/icon-57.png" sizes="57x57" rel="apple-touch-icon"> <!-- iOS 6 iPhone -->
   </head>
 
   <body>
@@ -41,7 +34,7 @@
       <div class="list-block">
         <ul>
           <li>
-            <a href="about.html" class="link">
+            <a href="p-lists.html" class="link">
               <div class="item-content">
                 <div class="item-inner">
                   <div class="item-title">Listas</div>
@@ -74,95 +67,16 @@
     <!-- Views-->
     <div class="views">
       <!-- view -->
-      <div class="view view-main navbar-fixed">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="left"></div>
-            <div class="center">Mis listas</div>
-            <div class="right">
-              <a href="#" class="icon-only open-panel"><i class="icon icon-bars-blue"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="pages">
-          <div class="page" data-page="lists">            
-            <div class="page-content">
-              <div class="content-block">
-                <a href="#" class="button add-list">Crear nueva lista</a>
-              </div>
-
-              <div class="list-block">
-                <ul class="lists">       
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="view view-main navbar-fixed" data-start-page="lists"></div>
     </div> <!-- end views -->
     
-    <!-- Popup to add new task -->    
+    <!-- Popup to add new task -->
     <div class="popup">
-      <div class="view view-popup navbar-fixed">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="link close-popup icon-only">Cancel</a>              
-            </div>
-            <div class="center sliding">Nuevo producto</div>
-            <div class="right">
-              <a href="#" class="link add-product">Aceptar</a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="pages">
-          <div class="page" data-page="find-product">
-            <div class="page-content">
-              <div class="list-block">
-                <ul>
-                  <li>
-                    <div class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Nombre</div>
-                        <div class="item-input">
-                          <input type="text" name="title">
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- <li>
-                    <div class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Color</div>
-                        <div class="item-input">
-                          <span data-color="orange" class="color selected"></span>
-                          <span data-color="green" class="color"></span>
-                          <span data-color="blue" class="color"></span>
-                          <span data-color="yellow" class="color"></span>
-                          <span data-color="white" class="color"></span>
-                          <span data-color="pink" class="color"></span>
-                          <span data-color="purple" class="color"></span>
-                          <span data-color="cyan" class="color"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </li> -->
-                </ul>
-              </div>
-
-              <div class="content-block">
-                <a href="p-product-detail.html" class="button" data-view=".view-popup">Editar producto</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="view view-popup navbar-fixed" data-start-page="find-product"></div>
     </div>
     <!-- end popup -->
 
-    <!-- Templates --> 
+    <!-- Templates -->
     <script id="template-list-item" type="template"></script> <!-- LISTS > LIST ITEM TEMPLATE -->
     <script id="template-product-item" type="template"></script> <!-- LIST > PRODUCT ITEM -->
     <script id="template-add-product" type="template"></script> <!-- PRODUCT DETAIL TEMPLATE -->

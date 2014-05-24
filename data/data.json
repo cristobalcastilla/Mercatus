@@ -14,9 +14,9 @@
       "created": "2014-01-21T00:00",
       "modified": "",
       "products": [
-        { "name": "flour", "amount": 0.5, "units": "g", "checked": "checked" },
-        { "name": "wc paper", "checked": "" }, 
-        { "name": "napkins", "amount": 1, "units": "p", "checked": "" }
+        { "slug": "flour", "amount": 0.5, "units": "g", "checked": "checked" },
+        { "slug": "wc-paper", "checked": "" }, 
+        { "slug": "napkins", "amount": 1, "units": "p", "checked": "" }
       ],
       "users": [1, 2]
     },
@@ -25,10 +25,10 @@
       "created": "2014-02-14T00:00",
       "modified": "",
       "products": [
-        { "name": "apples", "amount": 1, "units": "k", "checked": "" },
-        { "name": "pineapple", "amount": 700, "units": "g", "checked": "" },
-        { "name": "lettuce", "checked": "" },
-        { "name": "oranges", "amount": 3, "checked": "checked" }
+        { "slug": "apples", "amount": 1, "units": "k", "checked": "" },
+        { "slug": "pineapple", "amount": 700, "units": "g", "checked": "" },
+        { "slug": "lettuce", "checked": "" },
+        { "slug": "oranges", "amount": 3, "checked": "checked" }
       ],
       "users": [1, 2]
     },
@@ -37,42 +37,41 @@
       "created": "2014-05-02T00:00",
       "modified": "",
       "products": [
-        { "name": "pork", "amount": 400, "units": "g", "checked": "" },
-        { "name": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "checked" },
-        { "name": "green peppers", "amount": 250, "units": "u", "checked": "" },
-        { "name": "chocolate", "amount": 2, "units": "p", "checked": "checked" }
+        { "slug": "pork", "amount": 400, "units": "g", "checked": "" },
+        { "slug": "milk", "amount": 2, "units": "l", "checked": "checked", "checked": "checked" },
+        { "slug": "green peppers", "amount": 250, "units": "u", "checked": "" },
+        { "slug": "chocolate", "amount": 2, "units": "p", "checked": "checked" }
       ],
       "users": [1, 2, 3, 4]
     }
   ],
 
-
   "products": [
     { "name": "apples", "category": 1 },
     { "name": "bananas", "category": 1 },
-    { "name": "chocolate" },
-    { "name": "choplets" },
-    { "name": "eggplants" },
-    { "name": "flour" },
-    { "name": "green peppers" },
-    { "name": "ketchup" },
-    { "name": "lettuce" },
-    { "name": "napkins" },
-    { "name": "milk" },
-    { "name": "mustard" },
-    { "name": "pears" },
-    { "name": "oranges" },
-    { "name": "red peppers" },
-    { "name": "pineapple" },
-    { "name": "pickles" },
-    { "name": "pork" },
-    { "name": "potatos" },
-    { "name": "shampoo" },
-    { "name": "shrimps" },
-    { "name": "sirloin" },
-    { "name": "tomatos" },
-    { "name": "veal" },
-    { "name": "wc paper" }
+    { "name": "chocolate", "category": 12 },
+    { "name": "choplets", "category": 2 },
+    { "name": "eggplants", "category": 1 },
+    { "name": "flour", "category": 6 },
+    { "name": "green peppers", "category": 1 },
+    { "name": "ketchup", "category": 8 },
+    { "name": "lettuce", "category": 1 },
+    { "name": "napkins", "category": 15 },
+    { "name": "milk", "category": 3 },
+    { "name": "mustard", "category": 8 },
+    { "name": "pears", "category": 1 },
+    { "name": "oranges", "category": 1 },
+    { "name": "red peppers", "category": 1 },
+    { "name": "pineapple", "category": 1 },
+    { "name": "pickles", "category": 12 },
+    { "name": "pork", "category": 3 },
+    { "name": "potatos", "category": 1 },
+    { "name": "shampoo", "category": 13 },
+    { "name": "shrimps", "category": 2 },
+    { "name": "sirloin", "category": 2 },
+    { "name": "tomatos", "category": 1 },
+    { "name": "veal", "category": 2 },
+    { "name": "wc paper", "category": 13 }
   ],
 
   "categories": [
