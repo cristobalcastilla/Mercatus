@@ -8,5 +8,7 @@ var ListItemModel = Backbone.Model.extend({
     amount: 0,
     units: undefined,
     notes: ''
-  }
+  },
+
+  productName: function () { return this.get('product').get('name'); }
 });

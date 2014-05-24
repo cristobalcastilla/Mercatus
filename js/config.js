@@ -56,7 +56,7 @@ function loadPages () {
 
     if ($item.context.innerHTML === '') {
       var fileName = $item.attr('data-start-page');      
-      $item.load('p-'+fileName+'.html', loadPages);
+      $item.load('pages/'+fileName+'.html', loadPages);
       return;
     }
   }
@@ -126,9 +126,14 @@ function createDataCollections (data) {
       created: moment(list.created),
       slug: list.name.toSlug()
     });
-    
-    // añadimos los items a la lista
-    _.each(list.items, function (item) {
+
+    // inicio las colecciones de items y usuarios
+    listModel.set('items', new ListItemsCollection()); 
+    listModel.set('users', new UsersCollection());
+
+    // relleno la colección de items
+    var items = 
+    _.each(list.items, function (item) {      
       var listItemModel = new ListItemModel({
         product: productsCollection.get(item.slug),
         checked: item.checked,
@@ -138,13 +143,14 @@ function createDataCollections (data) {
       listModel.get('items').add(listItemModel);
     });
 
-    // relleno los usuarios a la lista
+    // creo la colección de usuarios y la relleno    
     _.each(list.users, function (user) {
       listModel.get('users').add(usersCollection.get(user));
     });
 
     // añado la nueva lista a la colección
     listsCollection.add(listModel);
+    console.log('listsCollection', listsCollection);
   });
 
   // inicio la aplicación!!!

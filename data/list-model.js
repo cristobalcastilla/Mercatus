@@ -5,8 +5,8 @@ var ListModel = Backbone.Model.extend({
     name: undefined,
     slug: undefined, 
 
-    items: new ListItemsCollection(),
-    users: new UsersCollection(),
+    items: undefined, // ListItemsCollection(),
+    users: undefined, // UsersCollection(),
 
     created: moment(),
     modified: undefined  

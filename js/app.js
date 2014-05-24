@@ -60,7 +60,7 @@ function startApp () {
     console.log('popup add product');
     var name = $$('.popup input[name="title"]').val().trim();
 
-    var products = listActive.get('products');
+    var products = listsCollection.currentList.get('products');
     products.add(new Backbone.Model({
       name: name,
       checked: ''
@@ -98,22 +98,25 @@ function renderLists (e) {
 function renderList (e) {
   var page = e.detail.page;
 
-  var model = _.find(listsCollection.models,  function (list) {
-    return list.get('slug') === page.query.id;
-  });
-
-  listActive = model;
+  // obtengo la lista que voy a mostrar
+  var model = listsCollection.findWhere({slug: page.query.id});
+  if (!model) throw new Error('Model not found');
+  
+  listsCollection.setCurrent(model); // dejo guardada la lista
 
   // añado items según la colección de lista
-  _.each(model.get('products').models, function (product) {
-    var template = _.template($$('#template-product-item').html(), product.toJSON());
+  _.each(model.get('items').models, function (listItem) {
+    var template = _.template($$('#template-product-item').html(), {
+      name: listItem.productName(),
+      checked: listItem.get('checked')
+    });
 
     var $li = $$(page.container).find('ul').append(template);
-    $(template).data('model', product);
+    $li.data('model', listItem);
   });
 
-  $$(page.container).find('.swipeout').on('delete', function () {
-    var model = $$(this).data('model');
+  // $$(page.container).find('.swipeout').on('delete', function () {
+    // var model = $$(this).data('model');
     // console.log('model', model);
     // var index;
     // for (var i = 0; i < todoData.length; i++) {
@@ -123,14 +126,14 @@ function renderList (e) {
     //     todoData.splice(index, 1);
     //     localStorage.td7Data = JSON.stringify(todoData);
     // }
-  });
+  // });
 }
 
 
 function updateList () {
-  if (!listActive) throw new Error('listActive undefined');
+  if (!listsCollection.currentList) throw new Error('listsCollection.currentList undefined');
 
-  var product = _.last(listActive.get('products').models);
+  var product = _.last(listsCollection.currentList.get('products').models);
   var template = _.template($$('#template-product-item').html(), product.toJSON());
   console.log('el list');
   console.log($$('[data-page="list"] ul'));
