@@ -1,6 +1,6 @@
 
 
-String.prototype.toSlug = function(){
+String.prototype.toSlug = function () {
   st = this.toLowerCase();
   st = st.replace(/[\u00C0-\u00C5]/ig,'a')
   st = st.replace(/[\u00C8-\u00CB]/ig,'e')
@@ -12,4 +12,9 @@ String.prototype.toSlug = function(){
   st = st.trim().replace(/ /g,'-');
   st = st.replace(/[\-]{2}/g,'');
   return (st.replace(/[^a-z\- ]*/gi,''));
+}
+
+
+String.prototype.toCamelCase = function () {
+  return this.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
 }

@@ -16,21 +16,49 @@ $(document).ready(function($) {
   productsCollection = null;
   usersCollection = null;
   listsCollection = null;
+  
+  registerEvents();
 
   $(document).on('step-loaded', loadNext);
   loadNext();
 });
 
+
+function registerEvents () {
+  $$(document).on('pageBeforeInit', function (e) {    
+    var page = e.detail.page;
+    var controllerClass = window[page.name.toCamelCase()+'Controller'];
+    if (_.isFunction( controllerClass.pageBeforeInit )) controllerClass.pageBeforeInit(e);
+  });
+  $$(document).on('pageInit', function (e) {    
+    var page = e.detail.page;
+    var controllerClass = window[page.name.toCamelCase()+'Controller'];
+    if (_.isFunction( controllerClass.pageInit )) controllerClass.pageInit(e);
+  });
+  $$(document).on('pageBeforeAnimation', function (e) {    
+    var page = e.detail.page;
+    var controllerClass = window[page.name.toCamelCase()+'Controller'];
+    if (_.isFunction( controllerClass.pageBeforeAnimation )) controllerClass.pageBeforeAnimation(e);
+  });
+  $$(document).on('pageAfterAnimation', function (e) {    
+    var page = e.detail.page;
+    var controllerClass = window[page.name.toCamelCase()+'Controller'];
+    if (_.isFunction( controllerClass.pageAfterAnimation )) controllerClass.pageAfterAnimation(e);
+  });
+  $$(document).on('pageBeforeRemove', function (e) {  
+    var page = e.detail.page;
+    var controllerClass = window[page.name.toCamelCase()+'Controller'];
+    if (_.isFunction( controllerClass.pageBeforeRemove )) controllerClass.pageBeforeRemove(e);
+  });
+}
+
+// ---
+// Gestión de carga de contenidos
+
 function loadNext () {  
-  var ret = loadingOrder[loadCounter].toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  
-  console.log('load next', ret);
   loadingOrder[loadCounter]();
   loadCounter++;
 }
-
 
 function loadTemplates () {
   if (templates.length === 0) templates = $('script[type="template"]');
@@ -77,7 +105,6 @@ function loadInitialData () {
 
 function createDataCollections (data) {
   console.log('SUCCESS loading data');
-
 
   // CATEGORIES COLLECTION
   categoriesCollection = new CategoriesCollection();
@@ -150,7 +177,6 @@ function createDataCollections (data) {
 
     // añado la nueva lista a la colección
     listsCollection.add(listModel);
-    console.log('listsCollection', listsCollection);
   });
 
   // inicio la aplicación!!!
