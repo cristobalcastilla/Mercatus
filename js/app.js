@@ -14,27 +14,31 @@ function startApp () {
   // Eventos de la vista Popup
   var $$popup = $$('.popup');
   $$popup.on('open', function () { 
-    $$('body').addClass('with-popup');    
+    $$('body').addClass('with-popup');
+    $$(this).trigger('popupOpen');
   });
 
-  $$popup.on('opened', function () {});
+  $$popup.on('opened', function () {
+    $$(this).trigger('popupOpened');
+  });
 
   $$popup.on('close', function () {
     $$('body').removeClass('with-popup');
+    $$(this).trigger('popupClose');
   });
 
-  $$popup.find('.add-product').on('click', function (e) {    
-    var name = $$('.popup input[name="title"]').val().trim();
+  // $$popup.find('.add-product').on('click', function (e) {   
+  //   var name = $$('.popup input[name="title"]').val().trim();
 
-    var products = listsCollection.currentList.get('products');
-    products.add(new Backbone.Model({
-      name: name,
-      checked: ''
-    }));
+  //   var products = listsCollection.currentList.get('products');
+  //   products.add(new Backbone.Model({
+  //     name: name,
+  //     checked: ''
+  //   }));
 
-    app.closeModal();
-    updateList();
-  });
+  //   app.closeModal();
+  //   updateList();
+  // });
 }
 
 

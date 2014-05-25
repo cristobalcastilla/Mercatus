@@ -28,27 +28,32 @@ function registerEvents () {
   $$(document).on('pageBeforeInit', function (e) {    
     var page = e.detail.page;
     var controllerClass = window[page.name.toCamelCase()+'Controller'];
-    if (_.isFunction( controllerClass.pageBeforeInit )) controllerClass.pageBeforeInit(e);
+    if (controllerClass && _.isFunction( controllerClass.pageBeforeInit ))
+      controllerClass.pageBeforeInit(e);
   });
   $$(document).on('pageInit', function (e) {    
     var page = e.detail.page;
     var controllerClass = window[page.name.toCamelCase()+'Controller'];
-    if (_.isFunction( controllerClass.pageInit )) controllerClass.pageInit(e);
+    if (controllerClass && _.isFunction( controllerClass.pageInit ))
+      controllerClass.pageInit(e);
   });
   $$(document).on('pageBeforeAnimation', function (e) {    
     var page = e.detail.page;
     var controllerClass = window[page.name.toCamelCase()+'Controller'];
-    if (_.isFunction( controllerClass.pageBeforeAnimation )) controllerClass.pageBeforeAnimation(e);
+    if (controllerClass && _.isFunction( controllerClass.pageBeforeAnimation )) 
+      controllerClass.pageBeforeAnimation(e);
   });
-  $$(document).on('pageAfterAnimation', function (e) {    
+  $$(document).on('pageAfterAnimation', function (e) {  
     var page = e.detail.page;
     var controllerClass = window[page.name.toCamelCase()+'Controller'];
-    if (_.isFunction( controllerClass.pageAfterAnimation )) controllerClass.pageAfterAnimation(e);
+    if (controllerClass && _.isFunction( controllerClass.pageAfterAnimation )) 
+      controllerClass.pageAfterAnimation(e);
   });
   $$(document).on('pageBeforeRemove', function (e) {  
     var page = e.detail.page;
     var controllerClass = window[page.name.toCamelCase()+'Controller'];
-    if (_.isFunction( controllerClass.pageBeforeRemove )) controllerClass.pageBeforeRemove(e);
+    if (controllerClass && _.isFunction( controllerClass.pageBeforeRemove )) 
+      controllerClass.pageBeforeRemove(e);
   });
 }
 
