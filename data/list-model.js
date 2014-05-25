@@ -39,5 +39,11 @@ var ListModel = Backbone.Model.extend({
     });
 
     this.get('items').add(item); // añado el modelo a la lista
+  },
+
+  removeItem: function (model) {
+    if (!model || model instanceof ListItemModel === false) throw new Error('removeItem needs a ListItemModel model');
+
+    this.get('items').remove(model);
   }
 });

@@ -25,8 +25,9 @@ var listController = {
     // creo la lista
     this.renderList();
 
-    // registro el evento para cuando se añadan nuevos productos a la lista
-    this.items.on('add', this.renderList);
+    // registro los eventos 
+    this.items.on('add', this.renderList); // evento para cuando se añadan nuevos productos a la lista
+    this.$$ul.on('delete', '.swipeout', this.deleteItem); // evento para cuando se borra con swipe
   },
 
 
@@ -36,19 +37,31 @@ var listController = {
   },
 
 
+  deleteItem: function (e) {
+    console.log('deleteItem');
+
+    var $$target = $$(e.target);
+    var model = $$target.data('model');
+
+    if (!model) throw new Error('deleteItem cannot find the model');
+
+    // borro el modelo de la coleccion
+    listsCollection.currentList.removeItem(model);
+  },
+
   renderList: function (e) {
-    // vacio la lista
-    this.$$ul.html('');
+    this.$$ul.html(''); // vacio la lista
 
     // relleno la lista usando una plantilla
-    _.each(this.items.models, function (listItem) {
+    _.each(this.items.models, function (listItem, index) {
       var template = _.template($$('#template-product-item').html(), {
         name: listItem.productName(),
         checked: listItem.get('checked')
       });
 
-      var $li = this.$$ul.append(template);
-      $li.data('model', listItem);
+      this.$$ul.append(template);
+      var $$li = $$(this.$$ul.children()[index]);
+      $$li.data('model', listItem);
     }, this);
   }
 
