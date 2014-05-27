@@ -8,124 +8,114 @@
     <title>Mercatus</title>
 
     <link rel="stylesheet" href="vendor/css/framework7.min.css">
-    <!-- <link rel="stylesheet" href="css/todo7.css"> -->
+    <link rel="stylesheet" href="css/app.css">
     
     <!-- Favicon-->
     <link href="img/icon-57.png" rel="shortcut icon"> 
-    <!-- iOS 7 iPad (retina) -->
-    <link href="img/icon-152.png" sizes="152x152" rel="apple-touch-icon">
-    <!-- iOS 6 iPad (retina) -->
-    <link href="img/icon-144.png" sizes="144x144" rel="apple-touch-icon">
-    <!-- iOS 7 iPhone (retina) -->
-    <link href="img/icon-120.png" sizes="120x120" rel="apple-touch-icon">
-    <!-- iOS 6 iPhone (retina) -->
-    <link href="img/icon-114.png" sizes="114x114" rel="apple-touch-icon">
-    <!-- iOS 7 iPad -->
-    <link href="img/icon-76.png" sizes="76x76" rel="apple-touch-icon">
-    <!-- iOS 6 iPad -->
-    <link href="img/icon-72.png" sizes="72x72" rel="apple-touch-icon">
-    <!-- iOS 6 iPhone -->
-    <link href="img/icon-57.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="img/icon-152.png" sizes="152x152" rel="apple-touch-icon"> <!-- iOS 7 iPad (retina) -->
+    <link href="img/icon-144.png" sizes="144x144" rel="apple-touch-icon"> <!-- iOS 6 iPad (retina) -->
+    <link href="img/icon-120.png" sizes="120x120" rel="apple-touch-icon"> <!-- iOS 7 iPhone (retina) -->
+    <link href="img/icon-114.png" sizes="114x114" rel="apple-touch-icon"> <!-- iOS 6 iPhone (retina) -->
+    <link href="img/icon-76.png" sizes="76x76" rel="apple-touch-icon"> <!-- iOS 7 iPad -->
+    <link href="img/icon-72.png" sizes="72x72" rel="apple-touch-icon"> <!-- iOS 6 iPad -->
+    <link href="img/icon-57.png" sizes="57x57" rel="apple-touch-icon"> <!-- iOS 6 iPhone -->
   </head>
 
   <body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+
+    <!-- Main menu -->
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <p>Hola, usuario</p>
+      </div>
+
+      <div class="list-block">
+        <ul>
+          <li>
+            <a href="pages/lists.html" class="link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Listas</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Aquí y ahora</div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="link">
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Usuario</div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <!-- Views-->
     <div class="views">
-
       <!-- view -->
-      <div class="view view-main navbar-fixed">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="left"></div>
-            <div class="center sliding">Listas</div>
-            <div class="right">
-              <a href="#" class="link icon-only open-popup"><i class="icon icon-plus">+</i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="pages">
-          <div data-page="index" class="page">
-            <div class="page-content">
-              <div class="list-block todo-items-list">
-                <ul></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="view view-main navbar-fixed" data-start-page="lists"></div>
     </div> <!-- end views -->
     
     <!-- Popup to add new task -->
     <div class="popup">
-      <div class="view view-popup navbar-fixed">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="left"></div>
-            <div class="center sliding">Nuevo producto</div>
-            <div class="right"><a href="#" class="link close-popup">Cancel</a></div>
-          </div>
-        </div>
-        
-        <div class="pages">
-          <div class="page">
-            <div class="page-content">
-              <div class="list-block">
-                <ul>
-                  <li>
-                    <div class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Nombre</div>
-                        <div class="item-input">
-                          <input type="text" name="title">
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Color</div>
-                        <div class="item-input">
-                          <span data-color="orange" class="color selected"></span>
-                          <span data-color="green" class="color"></span>
-                          <span data-color="blue" class="color"></span>
-                          <span data-color="yellow" class="color"></span>
-                          <span data-color="white" class="color"></span>
-                          <span data-color="pink" class="color"></span>
-                          <span data-color="purple" class="color"></span>
-                          <span data-color="cyan" class="color"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="content-block"><a class="button add-task">Añadir producto</a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> <!-- end popup -->
+      <div class="view view-popup navbar-fixed" data-start-page="find-product"></div>
+    </div>
+    <!-- end popup -->
 
-    <!-- Template-->
-    <script id="todo-item-template" type="template">
-      <li data-color="{{color}}" data-id="{{id}}" class="swipeout">
-        <label class="label-checkbox item-content swipeout-content"><input type="checkbox" {{checked}}>
-          <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
-          <div class="item-inner">
-            <div class="item-title">{{title}}</div>
-          </div>
-        </label>
-        <div class="swipeout-actions">
-          <div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div>
-        </div>
-      </li>
-    </script>
-
-    <!-- Path to Framework7 Library JS-->
+    <!-- +++ -->
+    <!-- A continuación va la carga de archivos JavaScript -->
+    
+    <!-- Templates -->
+    <script id="template-list-item" type="template"></script> <!-- LISTS > LIST ITEM TEMPLATE -->
+    <script id="template-product-item" type="template"></script> <!-- LIST > PRODUCT ITEM -->
+    <script id="template-product-detail" type="template"></script>  <!-- PRODUCT DETAIL TEMPLATE -->
+    
+    <!-- Librerias JS -->
+    <script type="text/javascript" src="vendor/js/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/js/underscore-min.js"></script>
+    <script type="text/javascript" src="vendor/js/backbone-min.js"></script>
+    <script type="text/javascript" src="vendor/js/moment-with-langs.min.js"></script>
     <script type="text/javascript" src="vendor/js/framework7.min.js"></script>
-    <!-- Path to your app js-->
-    <script type="text/javascript" src="js/todo7.js"></script>
+    
+    <!-- Los JS específicos de nuestra aplicación -->
+    <!-- models & collections -->
+    <script type="text/javascript" src="data/category-model.js"></script>
+    <script type="text/javascript" src="data/list-item-model.js"></script>
+    <script type="text/javascript" src="data/product-model.js"></script>
+    <script type="text/javascript" src="data/user-model.js"></script>
+
+    <script type="text/javascript" src="data/categories-collection.js"></script>    
+    <script type="text/javascript" src="data/list-items-collection.js"></script>
+    <script type="text/javascript" src="data/products-collection.js"></script>    
+    <script type="text/javascript" src="data/users-collection.js"></script>    
+
+    <script type="text/javascript" src="data/list-model.js"></script>
+    <script type="text/javascript" src="data/lists-collection.js"></script>
+
+    <!-- Los Controladores que gestionan las vistas -->
+    <script type="text/javascript" src="controllers/find-product-controller.js"></script>
+    <script type="text/javascript" src="controllers/list-controller.js"></script>
+    <script type="text/javascript" src="controllers/lists-controller.js"></script>
+    <script type="text/javascript" src="controllers/product-detail-controller.js"></script>
+
+
+    <!-- y por último... -->
+    <script type="text/javascript" src="js/helpers.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>

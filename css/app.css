@@ -1,0 +1,17 @@
+
+
+.panel ul {
+  background-color: transparent;
+  border: none;
+}
+
+.panel li {
+}
+
+.panel li .item-inner {
+  border-bottom-color: #515151;
+}
+
+.panel li .item-title {
+  color: rgba(255, 255, 255, .75);
+}
