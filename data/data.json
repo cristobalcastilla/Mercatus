@@ -75,7 +75,7 @@
   ],
 
   "categories": [
-    { "id":1, "name": "fruit and veg" },
+    { "id":1, "name": "Frutas y verduras" },
     { "id":2, "name": "meat and seafood" },
     { "id":3, "name": "milk and dairy" },
     { "id":4, "name": "breads and baked goods" },

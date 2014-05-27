@@ -16,7 +16,8 @@ var findProductController = {
     this.$$el = $$(page.container);
     this.$$title = this.$$el.find('input[name="title"]');
 
-    $(document).on('popupOpened', this.opened);
+    $(document).on('popupOpened', this.popupOpened);
+    $(document).on('popupClose', this.popupClose);
     $('.add-product').on('click', this.onAddProductClick);
   },
 
@@ -48,9 +49,13 @@ var findProductController = {
   },
 
   // eventos que recibe de la vista
-  opened: function () {
+  popupOpened: function () {
     console.log('findProductController opened');
     
     this.$$title.focus();
+  },
+
+  popupClose: function () {
+    this.$$title.val('');
   }
 };

@@ -10,7 +10,6 @@ function startApp () {
   mainView = app.addView('.view-main', { dynamicNavbar: true });
   popupView = app.addView('.view-popup', { dynamicNavbar: true });
 
-  
   // Eventos de la vista Popup
   var $$popup = $$('.popup');
   $$popup.on('open', function () { 

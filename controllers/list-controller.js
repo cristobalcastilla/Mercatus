@@ -9,8 +9,9 @@ var listController = {
 
   pageInit: function (e) {
     console.log('listController pageInit');
-
+    
     var page = e.detail.page;
+
     this.$$el = $$(page.container);
     this.$$ul = this.$$el.find('ul');
 
