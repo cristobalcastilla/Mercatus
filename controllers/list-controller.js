@@ -22,7 +22,7 @@ var listController = {
     // dejo guardada la lista
     listsCollection.setCurrent(this.model); 
     this.items = this.model.get('items'); // coleccion con los items de esta lista
-
+    
     // cambio el nombre de la lista
     var navBar = _.last( $$('.view-main').find('.navbar-inner') );
     $$(navBar).find('.center').html( this.model.get('name') );

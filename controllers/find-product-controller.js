@@ -19,6 +19,23 @@ var findProductController = {
     $(document).on('popupOpened', this.popupOpened);
     $(document).on('popupClose', this.popupClose);
     $('.add-product').on('click', this.onAddProductClick);
+
+    this.$typeahead = $('.find-product ul.results');
+    console.log('typeahead', this.$typeahead);
+
+    this.$typeahead.typeahead({
+      source: function(query, process) {
+        return ["Deluxe Bicycle", "Super Deluxe Trampoline", "Super Duper Scooter"];
+      }
+    });
+
+    $('.find-product input[name="title"]').change(this.autocomplete);
+    // this.$$el.find('input[name="title"]').on('change', this.autocomplete);
+  },
+
+
+  autocomplete: function (e) {
+    console.log('autocomplete');
   },
 
 

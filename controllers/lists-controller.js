@@ -22,6 +22,14 @@ var listsController = {
         });
         
         $$ul.append(template); // añado el li a la lista en la página
+
+        // modifico la barra de estatus
+        var items = list.get('items');
+        var proportion = items.where({ checked: 'checked' }).length / items.length;
+        var lastLi = _.last($$ul.children());
+        var bar = $(lastLi).find('.status-bar');
+        bar.css('width', 265*proportion);
+
       }, this);
     }
   }

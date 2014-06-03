@@ -15,3 +15,27 @@
 .panel li .item-title {
   color: rgba(255, 255, 255, .75);
 }
+
+
+/* LISTS */
+div[data-page="lists"] .item-inner {
+  position: relative;
+}
+
+div[data-page="lists"] .completed-bar {
+  background-color: #ddd;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  top: 36px;
+  width: 265px;
+}
+
+div[data-page="lists"] .status-bar {
+  background-color: blue;
+  height: 2px;
+  /*left: 0;*/
+  /*position: absolute;*/
+  /*top: 36px;*/
+  width: 5px;
+}
