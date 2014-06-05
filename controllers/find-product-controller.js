@@ -21,7 +21,6 @@ var findProductController = {
     $('.add-product').on('click', this.onAddProductClick);
 
     this.$typeahead = $('.find-product ul.results');
-    console.log('typeahead', this.$typeahead);
 
     this.$typeahead.typeahead({
       source: function(query, process) {

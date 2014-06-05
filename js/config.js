@@ -147,6 +147,17 @@ function createDataCollections (data) {
   });
 
 
+  // UNITS COLLECTION
+  unitsCollection = new Backbone.Collection();
+  _.each(data.units, function (unit) {
+     unitsCollection.add({
+      id: unit.id,
+      name: unit.name,
+      abbr: unit.abbr 
+     })
+  });
+
+
   // LISTS COLLECTION
   // inicializamos la colección que tendrá todas las listas
   listsCollection = new ListsCollection();

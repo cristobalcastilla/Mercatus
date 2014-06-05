@@ -39,3 +39,10 @@ div[data-page="lists"] .status-bar {
   /*top: 36px;*/
   width: 5px;
 }
+
+
+/* LIST */
+div[data-page="list"] .amount {
+  font-size: 14px;
+  opacity: .8;
+}
