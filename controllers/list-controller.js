@@ -73,16 +73,28 @@ var listController = {
       });
 
       this.$$ul.append(template);
-      var $$li = $$(this.$$ul.children()[index]);
-      $$li.data('model', listItem);
+      var $li = $(this.$$ul.children()[index]);
+      $li.data('model', listItem);
     }, this);
 
+    // eventos de los list items
+    this.$$ul.on('click', 'li', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    // eventos de los checkboxes
     this.$$ul.on('click', '.item-media', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      // console.log('j', $(e.target));
-      console.log('e', $(e.target).parent().css({position:'relative', left:'10px'}));
       
+      var $icon = $(e.target);
+      $icon.toggleClass('checked');
+
+      var $li = $icon.parent().parent().parent();
+      var itemModel = $li.data('model');
+      
+      itemModel.set('checked', $icon.hasClass('checked')?'checked':'');
     });
 
   }

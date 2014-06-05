@@ -32,11 +32,8 @@ div[data-page="lists"] .completed-bar {
 }
 
 div[data-page="lists"] .status-bar {
-  background-color: blue;
+  background-color: #007aff;
   height: 2px;
-  /*left: 0;*/
-  /*position: absolute;*/
-  /*top: 36px;*/
   width: 5px;
 }
 
@@ -45,4 +42,16 @@ div[data-page="lists"] .status-bar {
 div[data-page="list"] .amount {
   font-size: 14px;
   opacity: .8;
+}
+
+div[data-page="list"] .icon.checked {
+  background-color: #007aff;
+}
+
+div[data-page="list"] .icon-form-checkbox.checked:after {
+  border: none;
+}
+
+div[data-page="list"] .icon-form-checkbox {
+  border-radius: 22px;
 }
