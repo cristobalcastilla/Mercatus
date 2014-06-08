@@ -14,9 +14,13 @@
       "created": "2014-01-21T00:00",
       "modified": "",
       "items": [
+        { "slug": "apples", "checked": "" },
+        { "slug": "shrimps", "checked": "" },
         { "slug": "flour", "amount": 0.5, "units": "g", "checked": "checked" },
         { "slug": "wc-paper", "checked": "" }, 
-        { "slug": "napkins", "amount": 1, "units": "p", "checked": "" }
+        { "slug": "napkins", "amount": 1, "units": "p", "checked": "" },
+        { "slug": "choplets", "amount": 2, "units": "k", "checked": "" },
+        { "slug": "eggplants", "checked": "checked" }
       ],
       "users": [1, 2]
     },

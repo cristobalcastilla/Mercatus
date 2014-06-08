@@ -45,5 +45,42 @@ var ListModel = Backbone.Model.extend({
     if (!model || model instanceof ListItemModel === false) throw new Error('removeItem needs a ListItemModel model');
 
     this.get('items').remove(model);
+  },
+
+  getCompletedPercent: function () {
+    var items = this.get('items');
+    var percent = items.where({ checked: 'checked' }).length / items.length;
+    return percent;
+  },
+
+  getItemsByCategory: function () {
+    var items = this.get('items');
+
+    // creo un array con todos los ids de las categorias
+    var categoriesIds = [];
+    items.each(function (item) {
+      categoriesIds.push(item.get('product').get('category').id);
+    });
+
+    // agrupo los ids
+    categoriesIds = _.uniq(categoriesIds, false);
+
+
+    console.log('categories - ', categoriesIds);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

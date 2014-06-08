@@ -54,7 +54,7 @@ var listController = {
     listsCollection.currentList.removeItem(model);
   },
 
-  renderList: function (e) {
+  renderList: function () {
     this.$$ul.html(''); // vacio la lista    
 
     // relleno la lista usando una plantilla
@@ -77,6 +77,41 @@ var listController = {
       $li.data('model', listItem);
     }, this);
 
+    
+    this.setEvents();    
+    // this.renderListWithCategories();
+    this.model.getItemsByCategory();
+  },
+
+  renderListWithCategories: function () {
+    // primero redistribuyo la lista
+
+    // this.$$ul.html(''); // vacio la lista
+
+    // relleno la lista usando una plantilla
+    // _.each(this.items.models, function (listItem, index) {
+    //   var units = '';
+    //   var amount = (listItem.get('amount') != 0)? ' - '+listItem.get('amount') : '';
+    //   if (amount) {
+    //     units = (listItem.get('units') != undefined)? unitsCollection.get(listItem.get('units')).get('abbr') : '';
+    //   }
+
+    //   var template = _.template($$('#template-product-item').html(), {
+    //     name: listItem.productName(),
+    //     amount: amount,
+    //     units: units,
+    //     checked: listItem.get('checked')
+    //   });
+
+    //   this.$$ul.append(template);
+    //   var $li = $(this.$$ul.children()[index]);
+    //   $li.data('model', listItem);
+    // }, this);   
+  },
+
+
+
+  setEvents: function () {
     // eventos de los list items
     this.$$ul.on('click', 'li', function (e) {
       e.preventDefault();
@@ -96,7 +131,6 @@ var listController = {
       
       itemModel.set('checked', $icon.hasClass('checked')?'checked':'');
     });
-
   }
 
 };
