@@ -4,6 +4,7 @@ var listController = {
 
   pageBeforeInit: function (e) {
     _.bindAll(this);
+    this.isListWithCategories = false;
   },
 
 
@@ -13,7 +14,7 @@ var listController = {
     var page = e.detail.page;
 
     this.$$el = $$(page.container);
-    this.$$ul = this.$$el.find('ul');
+    this.$$ul = this.$$el.find('.simple-list').find('ul');    
 
     // obtengo la lista que voy a mostrar
     this.model = listsCollection.findWhere({slug: page.query.id});
@@ -30,15 +31,19 @@ var listController = {
     // creo la lista
     this.renderList();
 
-    // registro los eventos 
-    this.items.on('add', this.renderList); // evento para cuando se añadan nuevos productos a la lista
-    this.$$ul.on('delete', '.swipeout', this.deleteItem); // evento para cuando se borra con swipe
+    // evento para cuando se añadan nuevos productos a la lista y 
+    this.items.on('add', this.renderList); 
+    // evento para cuando se borra con swipe
+    this.$$ul.on('delete', '.swipeout', this.deleteItem);
   },
 
 
   pageBeforeRemove: function (e) {
-    // des-registro el evento
+    // des-registro los eventos
     this.items.off('add', this.renderList);
+    this.$$ul.off('delete', '.swipeout', this.deleteItem);
+    this.$$ul.off('click', 'li', this.listItemClicked);
+    this.$$ul.off('click', '.item-media', this.itemMediaClicked);
   },
 
 
@@ -54,7 +59,15 @@ var listController = {
     listsCollection.currentList.removeItem(model);
   },
 
+
   renderList: function () {
+    if (this.isListWithCategories) {
+      this.renderListWithCategories();
+      return;
+    }
+
+    console.log('Rendering Simple List');
+
     this.$$ul.html(''); // vacio la lista    
 
     // relleno la lista usando una plantilla
@@ -76,15 +89,13 @@ var listController = {
       var $li = $(this.$$ul.children()[index]);
       $li.data('model', listItem);
     }, this);
-
     
-    this.setEvents();    
-    // this.renderListWithCategories();
-    this.model.getItemsByCategory();
+    this.setEvents();
   },
 
+
   renderListWithCategories: function () {
-    // primero redistribuyo la lista
+    console.log('Rendering List With Categories');
 
     // this.$$ul.html(''); // vacio la lista
 
@@ -110,27 +121,31 @@ var listController = {
   },
 
 
-
   setEvents: function () {
     // eventos de los list items
-    this.$$ul.on('click', 'li', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    });
+    this.$$ul.on('click', 'li', this.listItemClicked);
 
     // eventos de los checkboxes
-    this.$$ul.on('click', '.item-media', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      var $icon = $(e.target);
-      $icon.toggleClass('checked');
+    this.$$ul.on('click', '.item-media', this.itemMediaClicked);
+  },
 
-      var $li = $icon.parent().parent().parent();
-      var itemModel = $li.data('model');
-      
-      itemModel.set('checked', $icon.hasClass('checked')?'checked':'');
-    });
+
+  listItemClicked: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+
+  itemMediaClicked: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var $icon = $(e.target);
+    $icon.toggleClass('checked');
+
+    var $li = $icon.parent().parent().parent();
+    var itemModel = $li.data('model');
+    
+    itemModel.set('checked', $icon.hasClass('checked')?'checked':'');
   }
-
 };

@@ -9,7 +9,7 @@ var ListModel = Backbone.Model.extend({
     users: undefined, // UsersCollection(),
 
     created: moment(),
-    modified: undefined  
+    modified: undefined
   },
 
   addItem: function (options) {
@@ -65,22 +65,27 @@ var ListModel = Backbone.Model.extend({
     // agrupo los ids
     categoriesIds = _.uniq(categoriesIds, false);
 
+    // creo la coleccion que contendra los items agrupados
+    var itemsByCategory = new Backbone.Collection();
 
-    console.log('categories - ', categoriesIds);
+    _.each(categoriesIds, function (categoryId) {      
+      // creo un array con los productsModel de cada categoria
+      var itemsOfCategory = [];
+      items.each(function (item) {  
+        if (item.get('product').get('category').id === categoryId) {
+          itemsOfCategory.push(item);          
+        }
+      });
+
+      var group = new Backbone.Model({
+        categoryName: categoriesCollection.get(categoryId).get('name'),
+        category: categoriesCollection.get(categoryId),
+        items: new Backbone.Collection(itemsOfCategory)
+      });
+
+      itemsByCategory.add(group);
+    });
+
+    return itemsByCategory;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
