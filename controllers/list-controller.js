@@ -4,7 +4,7 @@ var listController = {
 
   pageBeforeInit: function (e) {
     _.bindAll(this);
-    this.isListWithCategories = false;
+    this.isListWithCategories = true;
   },
 
 
@@ -14,7 +14,7 @@ var listController = {
     var page = e.detail.page;
 
     this.$$el = $$(page.container);
-    this.$$ul = this.$$el.find('.simple-list').find('ul');    
+    this.$$simpleList = this.$$el.find('.simple-list').find('ul');    
 
     // obtengo la lista que voy a mostrar
     this.model = listsCollection.findWhere({slug: page.query.id});
@@ -34,16 +34,16 @@ var listController = {
     // evento para cuando se añadan nuevos productos a la lista y 
     this.items.on('add', this.renderList); 
     // evento para cuando se borra con swipe
-    this.$$ul.on('delete', '.swipeout', this.deleteItem);
+    this.$$simpleList.on('delete', '.swipeout', this.deleteItem);
   },
 
 
   pageBeforeRemove: function (e) {
     // des-registro los eventos
     this.items.off('add', this.renderList);
-    this.$$ul.off('delete', '.swipeout', this.deleteItem);
-    this.$$ul.off('click', 'li', this.listItemClicked);
-    this.$$ul.off('click', '.item-media', this.itemMediaClicked);
+    this.$$simpleList.off('delete', '.swipeout', this.deleteItem);
+    this.$$simpleList.off('click', 'li', this.listItemClicked);
+    this.$$simpleList.off('click', '.item-media', this.itemMediaClicked);
   },
 
 
@@ -68,7 +68,7 @@ var listController = {
 
     console.log('Rendering Simple List');
 
-    this.$$ul.html(''); // vacio la lista    
+    this.$$simpleList.html(''); // vacio la lista    
 
     // relleno la lista usando una plantilla
     _.each(this.items.models, function (listItem, index) {
@@ -85,8 +85,8 @@ var listController = {
         checked: listItem.get('checked')
       });
 
-      this.$$ul.append(template);
-      var $li = $(this.$$ul.children()[index]);
+      this.$$simpleList.append(template);
+      var $li = $(this.$$simpleList.children()[index]);
       $li.data('model', listItem);
     }, this);
     
@@ -97,7 +97,45 @@ var listController = {
   renderListWithCategories: function () {
     console.log('Rendering List With Categories');
 
-    // this.$$ul.html(''); // vacio la lista
+    // obtengo el div donde pondre todo la lista con titulos
+    this.$$categorizedList = this.$$el.find('.categorized-list');
+
+    // obtengo la coleccion ordenada por categorias
+    var itemsByCategory = this.model.getItemsByCategory();
+
+    itemsByCategory.each(function (group) {
+      // creo el template con el titulo y el ul
+      var titleTemplate = _.template(getTemplate('category-list'), {
+        title: group.get('title')
+      });
+
+      this.$$categorizedList.append(titleTemplate);
+
+      // referencio el ul
+      var $$ul = $$(_.last(this.$$categorizedList.children())).find('ul');
+      
+      // creo los items
+      var items = group.get('items');
+      items.each(function (listItem) {
+        var amount = '';
+        var units = '';
+
+        if (listItem.hasAmount()) {
+          amount = ' - ' + listItem.get('amount');
+          units = listItem.getUnitsAbbr();
+        }
+
+        var productTemplate = _.template(getTemplate('product-item'), {
+          name: listItem.productName(),
+          amount: amount,
+          units: units,
+          checked: listItem.get('checked')
+        });
+
+        $$ul.append(productTemplate);
+      }, this);
+    }, this);
+
 
     // relleno la lista usando una plantilla
     // _.each(this.items.models, function (listItem, index) {
@@ -114,8 +152,8 @@ var listController = {
     //     checked: listItem.get('checked')
     //   });
 
-    //   this.$$ul.append(template);
-    //   var $li = $(this.$$ul.children()[index]);
+    //   this.$$simpleList.append(template);
+    //   var $li = $(this.$$simpleList.children()[index]);
     //   $li.data('model', listItem);
     // }, this);   
   },
@@ -123,10 +161,10 @@ var listController = {
 
   setEvents: function () {
     // eventos de los list items
-    this.$$ul.on('click', 'li', this.listItemClicked);
+    this.$$simpleList.on('click', 'li', this.listItemClicked);
 
     // eventos de los checkboxes
-    this.$$ul.on('click', '.item-media', this.itemMediaClicked);
+    this.$$simpleList.on('click', '.item-media', this.itemMediaClicked);
   },
 
 

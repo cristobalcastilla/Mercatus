@@ -32,7 +32,7 @@
         { "slug": "apples", "amount": 1, "units": "k", "checked": "" },
         { "slug": "pineapple", "amount": 700, "units": "g", "checked": "" },
         { "slug": "lettuce", "checked": "" },
-        { "slug": "oranges", "amount": 3, "checked": "checked" }
+        { "slug": "oranges", "amount": 3, "units": "k", "checked": "checked" }
       ],
       "users": [1, 2]
     },

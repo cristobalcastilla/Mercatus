@@ -18,3 +18,9 @@ String.prototype.toSlug = function () {
 String.prototype.toCamelCase = function () {
   return this.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
 }
+
+
+getTemplate = function (id) {
+  if ($$('#template-'+id).length === 0) throw new Error('Template not found');
+  return $$('#template-'+id).html();
+}

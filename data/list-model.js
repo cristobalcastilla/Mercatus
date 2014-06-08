@@ -78,7 +78,7 @@ var ListModel = Backbone.Model.extend({
       });
 
       var group = new Backbone.Model({
-        categoryName: categoriesCollection.get(categoryId).get('name'),
+        title: categoriesCollection.get(categoryId).get('name'),
         category: categoriesCollection.get(categoryId),
         items: new Backbone.Collection(itemsOfCategory)
       });
