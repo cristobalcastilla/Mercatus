@@ -47,9 +47,13 @@ var ListModel = Backbone.Model.extend({
     this.get('items').remove(model);
   },
 
+  getTotalChecked: function () {
+    return this.get('items').where({ checked: 'checked' }).length;
+  },
+
   getCompletedPercent: function () {
     var items = this.get('items');
-    var percent = items.where({ checked: 'checked' }).length / items.length;
+    var percent = this.getTotalChecked() / items.length;
     return percent;
   },
 

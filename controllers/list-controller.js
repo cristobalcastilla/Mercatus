@@ -72,13 +72,15 @@ var listController = {
 
     // relleno la lista usando una plantilla
     _.each(this.items.models, function (listItem, index) {
+      var amount = '';
       var units = '';
-      var amount = (listItem.get('amount') != 0)? ' - '+listItem.get('amount') : '';
-      if (amount) {
-        units = (listItem.get('units') != undefined)? unitsCollection.get(listItem.get('units')).get('abbr') : '';
+
+      if (listItem.hasAmount()) {
+        amount = ' - ' + listItem.get('amount');
+        units = listItem.getUnitsAbbr();
       }
 
-      var template = _.template($$('#template-product-item').html(), {
+      var template = _.template(getTemplate('product-item'), {
         name: listItem.productName(),
         amount: amount,
         units: units,
@@ -134,28 +136,7 @@ var listController = {
 
         $$ul.append(productTemplate);
       }, this);
-    }, this);
-
-
-    // relleno la lista usando una plantilla
-    // _.each(this.items.models, function (listItem, index) {
-    //   var units = '';
-    //   var amount = (listItem.get('amount') != 0)? ' - '+listItem.get('amount') : '';
-    //   if (amount) {
-    //     units = (listItem.get('units') != undefined)? unitsCollection.get(listItem.get('units')).get('abbr') : '';
-    //   }
-
-    //   var template = _.template($$('#template-product-item').html(), {
-    //     name: listItem.productName(),
-    //     amount: amount,
-    //     units: units,
-    //     checked: listItem.get('checked')
-    //   });
-
-    //   this.$$simpleList.append(template);
-    //   var $li = $(this.$$simpleList.children()[index]);
-    //   $li.data('model', listItem);
-    // }, this);   
+    }, this);  
   },
 
 
